@@ -32,9 +32,10 @@ var FloatingLabel = createReactClass({
       text: this.props.value,
       defaultValue: this.props.defaultValue,
       dirty: (this.props.value || this.props.placeholder),
+      dirtyDefault: (this.props.defaultValue || this.props.placeholder),
     };
 
-    var style = state.dirty ? dirtyStyle : cleanStyle
+    var style = state.dirty || state.dirtyDefault ? dirtyStyle : cleanStyle
     state.labelStyle = {
       fontSize: new Animated.Value(style.fontSize),
       top: new Animated.Value(style.top)
@@ -48,13 +49,30 @@ var FloatingLabel = createReactClass({
       this.setState({ text: props.value, dirty: !!props.value })
       this._animate(!!props.value)
     } if (typeof props.defaultValue !== 'undefined' && props.defaultValue !== this.state.defaultValue) {
-      this.setState({ text: props.defaultValue, dirty: !!props.defaultValue })
+      this.setState({ text: props.defaultValue, dirtyDefault: !!props.defaultValue })
       this._animate(!!props.defaultValue)
     }
   },
 
   _animate(dirty) {
     var nextStyle = dirty ? dirtyStyle : cleanStyle
+    var labelStyle = this.state.labelStyle
+    var anims = Object.keys(nextStyle).map(prop => {
+      return Animated.timing(
+        labelStyle[prop],
+        {
+          toValue: nextStyle[prop],
+          duration: 200
+        },
+        Easing.ease
+      )
+    })
+
+    Animated.parallel(anims).start()
+  },
+
+  _animate(dirtyDefault) {
+    var nextStyle = dirtyDefault ? dirtyStyle : cleanStyle
     var labelStyle = this.state.labelStyle
     var anims = Object.keys(nextStyle).map(prop => {
       return Animated.timing(
@@ -82,6 +100,25 @@ var FloatingLabel = createReactClass({
     if (!this.state.text) {
       this._animate(false)
       this.setState({ dirty: false });
+    }
+
+    if (this.props.onBlur) {
+      this.props.onBlur(arguments);
+    }
+  },
+
+  _onFocus() {
+    this._animate(true)
+    this.setState({ dirtyDefault: true })
+    if (this.props.onFocus) {
+      this.props.onFocus(arguments);
+    }
+  },
+
+  _onBlur() {
+    if (!this.state.text) {
+      this._animate(false)
+      this.setState({ dirtyDefault: false });
     }
 
     if (this.props.onBlur) {
