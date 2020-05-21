@@ -32,7 +32,6 @@ var FloatingLabel = createReactClass({
       text: this.props.value,
       defaultValue: this.props.defaultValue,
       dirty: (this.props.value || this.props.placeholder),
-      dirtyDefault: (this.props.defaultValue || this.props.placeholder),
     };
 
     var style = state.dirty ? dirtyStyle : cleanStyle
@@ -49,7 +48,7 @@ var FloatingLabel = createReactClass({
       this.setState({ text: props.value, dirty: !!props.value })
       this._animate(!!props.value)
     } if (typeof props.defaultValue !== 'undefined' && props.defaultValue !== this.state.defaultValue) {
-      this.setState({ text: props.defaultValue, dirtyDefault: !!props.defaultValue })
+      this.setState({ text: props.defaultValue, dirty: !!props.defaultValue })
       this._animate(!!props.defaultValue)
     }
   },
