@@ -163,7 +163,6 @@ var FloatingLabel = createReactClass({
         {this._renderLabel()}
         <TextInput
           {...props}
-          defaultValue={defaultValue}
         >
         </TextInput>
       </View>
