@@ -31,8 +31,8 @@ var FloatingLabel = createReactClass({
     var state = {
       text: this.props.value,
       defaultValue: this.props.defaultValue,
-      dirty: (this.props.value || this.props.placeholder)
-      dirtyDefault: (this.props.defaultValue || this.props.placeholder)
+      dirty: (this.props.value || this.props.placeholder),
+      dirtyDefault: (this.props.defaultValue || this.props.placeholder),
     };
 
     var style = state.dirty ? dirtyStyle : cleanStyle
