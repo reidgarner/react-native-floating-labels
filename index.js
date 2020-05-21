@@ -30,7 +30,9 @@ var FloatingLabel = createReactClass({
   getInitialState() {
     var state = {
       text: this.props.value,
+      defaultValue: this.props.defaultValue,
       dirty: (this.props.value || this.props.placeholder)
+      dirtyDefault: (this.props.defaultValue || this.props.placeholder)
     };
 
     var style = state.dirty ? dirtyStyle : cleanStyle
@@ -46,6 +48,9 @@ var FloatingLabel = createReactClass({
     if (typeof props.value !== 'undefined' && props.value !== this.state.text) {
       this.setState({ text: props.value, dirty: !!props.value })
       this._animate(!!props.value)
+    } if (typeof props.defaultValue !== 'undefined' && props.defaultValue !== this.state.defaultValue) {
+      this.setState({ text: props.defaultValue, dirtyDefault: !!props.defaultValue })
+      this._animate(!!props.defaultValue)
     }
   },
 
@@ -121,7 +126,7 @@ var FloatingLabel = createReactClass({
       clearButtonMode: this.props.clearButtonMode,
       clearTextOnFocus: this.props.clearTextOnFocus,
       controlled: this.props.controlled,
-      defaultValue: this.props.defaultValue,
+      defaultValue: this.state.defaultValue,
       editable: this.props.editable,
       enablesReturnKeyAutomatically: this.props.enablesReturnKeyAutomatically,
       keyboardType: this.props.keyboardType,
