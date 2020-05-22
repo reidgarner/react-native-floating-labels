@@ -166,7 +166,6 @@ var FloatingLabel = createReactClass({
       editable: this.props.editable,
       enablesReturnKeyAutomatically: this.props.enablesReturnKeyAutomatically,
       keyboardType: this.props.keyboardType,
-      ref: this.props.ref,
       textContentType: this.props.textContentType,
       multiline: this.props.multiline,
       numberOfLines: this.props.numberOfLines,
@@ -175,6 +174,7 @@ var FloatingLabel = createReactClass({
       onChangeText: this.onChangeText,
       onEndEditing: this.updateText,
       onFocus: this._onFocus,
+      ref: this.props.myRef,
       onSubmitEditing: this.props.onSubmitEditing,
       password: this.props.secureTextEntry || this.props.password, // Compatibility
       placeholder: this.props.placeholder,
