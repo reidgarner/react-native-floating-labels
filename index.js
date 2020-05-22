@@ -167,7 +167,7 @@ var FloatingLabel = createReactClass({
       enablesReturnKeyAutomatically: this.props.enablesReturnKeyAutomatically,
       keyboardType: this.props.keyboardType,
       textContentType: this.props.textContentType,
-      maxLength: this.props.maxLength,
+      // maxLength: this.props.maxLength,
       multiline: this.props.multiline,
       numberOfLines: this.props.numberOfLines,
       onBlur: this._onBlur,
@@ -206,6 +206,7 @@ var FloatingLabel = createReactClass({
         {this._renderLabel()}
         <TextInput
           {...props}
+          maxLength={maxLength}
         >
         </TextInput>
       </View>
